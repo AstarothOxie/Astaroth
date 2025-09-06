@@ -1,1 +1,22 @@
+-- Infinite Jump Function
+return function(Value)
+    local UIS = game:GetService("UserInputService")
+    local player = game.Players.LocalPlayer
 
+    if Value then
+        -- Aktifkan infinite jump
+        if not _G.InfJumpConnection then
+            _G.InfJumpConnection = UIS.JumpRequest:Connect(function()
+                if player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
+                    player.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+                end
+            end)
+        end
+    else
+        -- Matikan infinite jump
+        if _G.InfJumpConnection then
+            _G.InfJumpConnection:Disconnect()
+            _G.InfJumpConnection = nil
+        end
+    end
+end
